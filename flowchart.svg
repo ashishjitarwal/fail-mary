@@ -1,0 +1,190 @@
+<svg width="680" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg" role="img" font-family="ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace">
+  <title>Hail Mary RC Car — system flowchart</title>
+  <desc>Flowchart showing the full lifecycle from power-on through WiFi connection, browser control, ESP32 command handling, motor output, and watchdog safety loop.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace; }
+      .th  { font-size: 13px; font-weight: 600; fill: #1a1a2e; }
+      .ts  { font-size: 11px; font-weight: 400; fill: #44445a; }
+      .arr { stroke: #888; stroke-width: 1.5; fill: none; }
+      /* teal — ESP32 startup */
+      .teal rect  { fill: #e1f5ee; stroke: #0f6e56; stroke-width: 0.8; }
+      /* purple — phone/browser */
+      .purple rect { fill: #eeedfe; stroke: #534ab7; stroke-width: 0.8; }
+      /* coral — ESP32 runtime */
+      .coral rect  { fill: #faece7; stroke: #993c1d; stroke-width: 0.8; }
+      /* gray — neutral */
+      .gray rect   { fill: #f1efe8; stroke: #5f5e5a; stroke-width: 0.8; }
+      .teal  .th   { fill: #085041; }
+      .teal  .ts   { fill: #0f6e56; }
+      .purple .th  { fill: #26215c; }
+      .purple .ts  { fill: #534ab7; }
+      .coral .th   { fill: #4a1b0c; }
+      .coral .ts   { fill: #713013; }
+      .gray  .th   { fill: #2c2c2a; }
+      .gray  .ts   { fill: #5f5e5a; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="680" height="820" fill="#fafaf8"/>
+
+  <!-- ── POWER ON ── -->
+  <g class="gray">
+    <rect x="240" y="30" width="200" height="44" rx="22"/>
+    <text class="th" x="340" y="57" text-anchor="middle">Power on</text>
+  </g>
+  <line x1="340" y1="74" x2="340" y2="108" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── ESP32 BOOTS ── -->
+  <g class="teal">
+    <rect x="240" y="108" width="200" height="56" rx="8"/>
+    <text class="th" x="340" y="130" text-anchor="middle">ESP32 boots</text>
+    <text class="ts" x="340" y="148" text-anchor="middle">Init PWM · start AP · start HTTP</text>
+  </g>
+  <line x1="340" y1="164" x2="340" y2="198" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── WIFI AP LIVE ── -->
+  <g class="teal">
+    <rect x="240" y="198" width="200" height="56" rx="8"/>
+    <text class="th" x="340" y="220" text-anchor="middle">WiFi AP live</text>
+    <text class="ts" x="340" y="238" text-anchor="middle">SSID: Hail mary · 192.168.4.2</text>
+  </g>
+
+  <!-- split branches -->
+  <path d="M240 226 L120 226 L120 310" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M440 226 L560 226 L560 310" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- column labels -->
+  <text class="ts" x="120" y="296" text-anchor="middle" font-weight="600">Phone / browser</text>
+  <text class="ts" x="560" y="296" text-anchor="middle" font-weight="600">ESP32 / hardware</text>
+
+  <!-- ── PHONE: JOIN WIFI ── -->
+  <g class="purple">
+    <rect x="20" y="310" width="200" height="56" rx="8"/>
+    <text class="th" x="120" y="332" text-anchor="middle">Phone joins WiFi</text>
+    <text class="ts" x="120" y="350" text-anchor="middle">User connects in settings</text>
+  </g>
+  <line x1="120" y1="366" x2="120" y2="400" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── ESP32: WATCHDOG STARTS ── -->
+  <g class="coral">
+    <rect x="460" y="310" width="200" height="56" rx="8"/>
+    <text class="th" x="560" y="332" text-anchor="middle">Watchdog starts</text>
+    <text class="ts" x="560" y="350" text-anchor="middle">lastCmdTime = millis()</text>
+  </g>
+  <line x1="560" y1="366" x2="560" y2="400" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── PHONE: OPEN BROWSER ── -->
+  <g class="purple">
+    <rect x="20" y="400" width="200" height="56" rx="8"/>
+    <text class="th" x="120" y="422" text-anchor="middle">Open browser</text>
+    <text class="ts" x="120" y="440" text-anchor="middle">Navigate to 192.168.4.2</text>
+  </g>
+  <line x1="120" y1="456" x2="120" y2="490" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── ESP32: SERVE PAGE ── -->
+  <g class="coral">
+    <rect x="460" y="400" width="200" height="56" rx="8"/>
+    <text class="th" x="560" y="422" text-anchor="middle">Serve control page</text>
+    <text class="ts" x="560" y="440" text-anchor="middle">HTML/CSS/JS from PROGMEM</text>
+  </g>
+  <line x1="560" y1="456" x2="560" y2="490" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- GET / arrow -->
+  <path d="M220 428 L460 428" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text class="ts" x="340" y="420" text-anchor="middle">GET /</text>
+
+  <!-- 200 OK arrow -->
+  <path d="M460 448 L220 448" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text class="ts" x="340" y="464" text-anchor="middle">200 OK + HTML</text>
+
+  <!-- ── PHONE: UI LOADS ── -->
+  <g class="purple">
+    <rect x="20" y="490" width="200" height="56" rx="8"/>
+    <text class="th" x="120" y="512" text-anchor="middle">Control UI loads</text>
+    <text class="ts" x="120" y="530" text-anchor="middle">D-pad, spin, speed slider</text>
+  </g>
+  <line x1="120" y1="546" x2="120" y2="580" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── ESP32: LOOP ── -->
+  <g class="coral">
+    <rect x="460" y="490" width="200" height="56" rx="8"/>
+    <text class="th" x="560" y="512" text-anchor="middle">loop() running</text>
+    <text class="ts" x="560" y="530" text-anchor="middle">handleClient() + watchdog check</text>
+  </g>
+  <line x1="560" y1="546" x2="560" y2="580" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── PHONE: PRESS BUTTON ── -->
+  <g class="purple">
+    <rect x="20" y="580" width="200" height="56" rx="8"/>
+    <text class="th" x="120" y="602" text-anchor="middle">User holds button</text>
+    <text class="ts" x="120" y="620" text-anchor="middle">fetch /cmd?action=forward</text>
+  </g>
+
+  <!-- ── ESP32: WATCHDOG CHECK ── -->
+  <g class="coral">
+    <rect x="460" y="580" width="200" height="56" rx="8"/>
+    <text class="th" x="560" y="602" text-anchor="middle">Command received?</text>
+    <text class="ts" x="560" y="620" text-anchor="middle">millis() − lastCmdTime</text>
+  </g>
+
+  <!-- GET /cmd arrow -->
+  <path d="M220 608 L460 608" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text class="ts" x="340" y="601" text-anchor="middle">GET /cmd</text>
+
+  <!-- yes → PWM -->
+  <line x1="560" y1="636" x2="560" y2="678" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="574" y="660">yes</text>
+
+  <!-- no → stop (watchdog fires, loops right) -->
+  <path d="M660 608 L676 608 L676 760 L662 760" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text class="ts" x="672" y="686" text-anchor="middle">&gt; 500ms</text>
+  <text class="ts" x="672" y="700" text-anchor="middle">→ stop</text>
+
+  <!-- ── ESP32: SET PWM ── -->
+  <g class="coral">
+    <rect x="460" y="678" width="200" height="56" rx="8"/>
+    <text class="th" x="560" y="700" text-anchor="middle">Set motor PWM</text>
+    <text class="ts" x="560" y="718" text-anchor="middle">ledcWrite() on 4 pins</text>
+  </g>
+  <line x1="560" y1="734" x2="560" y2="758" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── MOTORS SPIN ── -->
+  <g class="gray">
+    <rect x="460" y="758" width="200" height="44" rx="8"/>
+    <text class="th" x="560" y="780" text-anchor="middle">BTS7960 → motors spin</text>
+  </g>
+
+  <!-- ── PHONE: RELEASE ── -->
+  <g class="purple">
+    <rect x="20" y="678" width="200" height="44" rx="8"/>
+    <text class="th" x="120" y="700" text-anchor="middle">User releases button</text>
+  </g>
+  <line x1="120" y1="722" x2="120" y2="758" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- ── PHONE: SEND STOP ── -->
+  <g class="purple">
+    <rect x="20" y="758" width="200" height="44" rx="8"/>
+    <text class="th" x="120" y="780" text-anchor="middle">fetch /cmd?action=stop</text>
+  </g>
+  <path d="M220 780 L460 780" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <!-- 100ms hold loop -->
+  <path d="M20 608 L4 608 L4 702 L20 702" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text class="ts" x="2" y="648" text-anchor="start">100ms</text>
+  <text class="ts" x="2" y="660" text-anchor="start">repeat</text>
+
+  <!-- ── LEGEND ── -->
+  <rect x="240" y="762" width="10" height="10" rx="2" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.8"/>
+  <text class="ts" x="255" y="771">ESP32 startup</text>
+  <rect x="340" y="762" width="10" height="10" rx="2" fill="#eeedfe" stroke="#534ab7" stroke-width="0.8"/>
+  <text class="ts" x="355" y="771">Phone / browser</text>
+  <rect x="240" y="778" width="10" height="10" rx="2" fill="#faece7" stroke="#993c1d" stroke-width="0.8"/>
+  <text class="ts" x="255" y="787">ESP32 runtime</text>
+  <rect x="340" y="778" width="10" height="10" rx="2" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.8"/>
+  <text class="ts" x="355" y="787">Hardware output</text>
+</svg>
