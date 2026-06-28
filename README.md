@@ -230,7 +230,7 @@ Built as a team for a university RC obstacle course competition.
 | [Ashish](https://github.com/ashishjitarwal) | Hardware, electrical wiring |
 | [@brijeshthilakofficial](https://github.com/brijeshthilakofficial) | Firmware, web interface, documentation |
 | [@aditya71206](https://github.com/aditya71206) | Mechanical chassis, assembly |
-| [@Greyspel](https://github.com/Greyspel) | Testing, competition logistics |
+| [@Greyspel](https://github.com/Greyspel) | Assembly and Testing|
 
 ---
 
