@@ -227,8 +227,8 @@ Built as a team for a university RC obstacle course competition.
 
 | Contributor | Role |
 |---|---|
-| [Ashish](https://github.com/ashishjitarwal) | Hardware, electrical wiring |
-| [@brijeshthilakofficial](https://github.com/brijeshthilakofficial) | Firmware, web interface, documentation |
+| [Ashish](https://github.com/ashishjitarwal) | Hardware, electrical wiring, documentation|
+| [@brijeshthilakofficial](https://github.com/brijeshthilakofficial) | Firmware,Parts Procurement, |
 | [@aditya71206](https://github.com/aditya71206) | Mechanical chassis, assembly |
 | [@Greyspel](https://github.com/Greyspel) | Assembly and Testing|
 
